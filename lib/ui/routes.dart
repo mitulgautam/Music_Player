@@ -16,7 +16,7 @@ class Router {
       case '/music':
         return MaterialPageRoute(builder: (_) => Music());
       case '/setting':
-        return MaterialPageRoute(builder: (_) => Setting());
+        return MaterialPageRoute(builder: (_) => Settings());
       case '/search':
         return MaterialPageRoute(builder: (_) => Search());
       default:

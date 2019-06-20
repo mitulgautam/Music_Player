@@ -24,7 +24,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   provider:
-
+  get_it:
+  flute_music_player: ^0.0.6
+  admob_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -50,6 +52,9 @@ flutter:
     - assets/image4.png
     - assets/image6.jpg
     - assets/image7.jpg
+    - assets/auto.png
+    - assets/light.png
+    - assets/dark.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
