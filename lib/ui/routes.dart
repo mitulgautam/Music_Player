@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_musically_app/ui/view/home.dart';
 import 'package:flutter_musically_app/ui/view/music.dart';
+import 'package:flutter_musically_app/ui/view/music_player.dart';
 import 'package:flutter_musically_app/ui/view/search.dart';
 import 'package:flutter_musically_app/ui/view/setting.dart';
 
@@ -19,6 +20,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => Settings());
       case '/search':
         return MaterialPageRoute(builder: (_) => Search());
+      case '/player':
+        return MaterialPageRoute(builder: (_) => MusicPlayer());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

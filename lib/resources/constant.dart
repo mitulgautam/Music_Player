@@ -25,4 +25,10 @@ class Data {
     'assets/image7.jpg',
   ];
   static final List<List<String>> image = [bollywoodImages, punjabiImages];
+  static final List<String> imageplayer = [
+    'assets/art1.jpg',
+    'assets/art2.jpg',
+    'assets/art3.jpg',
+    'assets/art4.jpg'
+  ];
 }

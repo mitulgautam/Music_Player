@@ -26,7 +26,7 @@ dependencies:
   provider:
   get_it:
   flute_music_player: ^0.0.6
-  admob_flutter:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -54,6 +54,10 @@ flutter:
     - assets/image7.jpg
     - assets/auto.png
     - assets/light.png
+    - assets/art1.jpg
+    - assets/art2.jpg
+    - assets/art3.jpg
+    - assets/art4.jpg
     - assets/dark.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

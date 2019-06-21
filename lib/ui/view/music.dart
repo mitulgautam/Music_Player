@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_musically_app/core/enum/view_state.dart';
 import 'package:flutter_musically_app/core/viewmodel/music_provider.dart';
 import 'package:flutter_musically_app/resources/theme.dart';
 import '../../locator.dart';
@@ -21,7 +20,6 @@ class _MusicState extends State<Music> {
   @override
   void initState() {
     modelLocator.initPlayer();
-    modelLocator.fetchSongs();
     super.initState();
   }
 
@@ -30,7 +28,7 @@ class _MusicState extends State<Music> {
     size = MediaQuery.of(context).size;
     return Scaffold(
         body: BaseView<MusicModel>(
-      builder: (context, model, _) => model.songList == null
+      builder: (context, model, _) => model.songsList == null
           ? Center(
               child: Column(
                 children: <Widget>[
@@ -42,12 +40,12 @@ class _MusicState extends State<Music> {
               ),
             )
           : ListView.builder(
-              itemCount: model.songList.length,
+              itemCount: model.songsList.length,
               itemBuilder: (context, index) {
-                var file = model.songList[index].albumArt == null
+                var file = model.songsList[index].albumArt == null
                     ? null
-                    : File.fromUri(Uri.parse(model.songList[index].albumArt));
-                return _musicCard(file, model.songList[index].title, index);
+                    : File.fromUri(Uri.parse(model.songsList[index].albumArt));
+                return _musicCard(file, model.songsList[index].title, index);
               },
             ),
     ));
@@ -56,8 +54,7 @@ class _MusicState extends State<Music> {
   Widget _musicCard(var file, String title, int index) {
     return InkWell(
       onTap: () {
-        modelLocator.play(modelLocator.songList[index]);
-        modelLocator.currentSong = index;
+        modelLocator.tapPlay(index);
       },
       child: Card(
         color: modelLocator.currentSong == index
