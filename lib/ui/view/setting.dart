@@ -170,6 +170,10 @@ class _SettingsState extends State<Settings> {
                       SizedBox(
                         height: 16.0,
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _textMedium('Themes', model.getTextColor()),
+                      ),
                       Card(
                         color: model.getWidgetColor(),
                         child: Container(
@@ -325,7 +329,7 @@ class _SettingsState extends State<Settings> {
           child: CircleAvatar(
             minRadius: size.width / 28,
             maxRadius: size.width / 28,
-            backgroundColor: secondry,
+            backgroundColor: Colors.white54,
           ),
         ),
       ),

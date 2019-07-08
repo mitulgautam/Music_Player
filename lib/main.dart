@@ -31,7 +31,11 @@ class _MyAppState extends State<MyApp> {
     var pref = SharedPreferences.getInstance();
     pref.then((val) {
       if (val.get('theme') == null) {
-        val.setString('theme', '5');
+        val.setString('theme', '0');
+        locator<SettingsModel>().primary =
+        Data.primary[0];
+        locator<SettingsModel>().secondry =
+        Data.secondry[0];
       } else {
         locator<SettingsModel>().primary =
             Data.primary[int.parse(val.get('theme'))];
