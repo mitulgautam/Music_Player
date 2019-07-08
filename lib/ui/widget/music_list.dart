@@ -16,6 +16,10 @@ class MusicList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor =
+    MediaQuery.of(context).platformBrightness == Brightness.dark
+        ? Colors.white
+        : Colors.black;
     final Size size = MediaQuery.of(context).size;
     return Container(
       child: Column(
@@ -25,7 +29,7 @@ class MusicList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              heading,style: CustomFontStyle.medium_bold_gothic(size.width),
+              heading,style: CustomFontStyle.medium_bold_gothic(size.width,textColor),
             ),
           ),
           Container(

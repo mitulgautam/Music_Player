@@ -10,6 +10,10 @@ class MusicBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor =
+        MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? Colors.white
+            : Colors.black;
     return Card(
       child: Container(
         width: size.width / 2.8,
@@ -34,8 +38,8 @@ class MusicBox extends StatelessWidget {
             ),
             Text(
               text,
-             // style: TextStyle(fontSize: 12.0),
-              style: CustomFontStyle.small_bold_gothic(size.width),
+              // style: TextStyle(fontSize: 12.0),
+              style: CustomFontStyle.small_bold_gothic(size.width, textColor),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

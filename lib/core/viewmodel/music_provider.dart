@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flute_music_player/flute_music_player.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_musically_app/core/enum/play_state.dart';
 import 'package:flutter_musically_app/core/enum/view_state.dart';
 import 'package:flutter_musically_app/resources/constant.dart';
@@ -119,8 +121,6 @@ class MusicModel extends BaseModel {
   }
 
   initPlayer() {
-    state = ViewState.Busy;
-
     _musicPlayer = MusicFinder();
     musicPlayer.setPositionHandler((p) {
       currentPosition = p;
@@ -137,7 +137,6 @@ class MusicModel extends BaseModel {
     musicPlayer.setStartHandler(() {});
     fetchSong();
     print(lengthList);
-    state = ViewState.Idle;
   }
 
   fetchSong() async {
@@ -173,7 +172,9 @@ class MusicModel extends BaseModel {
 
   void tapPlay(int index) {
     setCurrentSong(index);
-    playState == PlayState.playing ? stop() : print('not playing');
+    playState == PlayState.playing || PlayState.paused == playState
+        ? stop()
+        : print('not playing');
     musicPlayer.play(songsList[currentSong].uri, isLocal: true).then((value) {
       print("Played: $value");
       playState = PlayState.playing;
@@ -212,14 +213,12 @@ class MusicModel extends BaseModel {
 
   void skipNext() {
     print('Skipping');
-//    if (randomSong == true) {
-//      playRandom();
-//      print('random');
-//    } else
-      if (currentSong < (lengthList - 1)) {
+    if (randomSong == true) {
+      playRandom();
+      print('random');
+    } else if (currentSong < (lengthList - 1)) {
       print('set');
-      setCurrentSong(currentSong + 1);
-      tapPlay(currentSong);
+      tapPlay(currentSong + 1);
     }
   }
 
@@ -229,15 +228,17 @@ class MusicModel extends BaseModel {
     } else if (currentSong == 0) {
       print("No prev song available!");
     } else if (currentSong > 0) {
-      setCurrentSong(currentSong - 1);
-      tapPlay(currentSong);
+      tapPlay(currentSong - 1);
     }
   }
 
   void playRandom() {
-    int temp = Random().nextInt(songsList.length);
-    print('Random Value: $temp');
-    tapPlay(temp);
+    print(songsList.length);
+    if (songsList.length > 0) {
+      int temp = Random().nextInt(songsList.length);
+      print('Random Value: $temp');
+      tapPlay(temp);
+    }
   }
 
   void mutePlayer() {
@@ -261,12 +262,46 @@ class MusicModel extends BaseModel {
     return Data.imageplayer[0];
   }
 
+  seekSong(double value) {
+    musicPlayer.seek(value * currentDuration.inSeconds);
+  }
+
   double progressBar() {
     return currentSong == -1
         ? 0
         : currentDuration == Duration(seconds: 0)
             ? 0
             : (currentPosition.inSeconds / currentDuration.inSeconds);
+  }
+
+  File getSongImage(int index) {
+    return songsList[index].albumArt == null
+        ? null
+        : File.fromUri(Uri.parse(songsList[index].albumArt));
+  }
+
+  dynamic getPlayerImage() {
+    return currentSong == -1
+        ? AssetImage(Data.imageplayer[3])
+        : getSongImage(currentSong) == null
+            ? AssetImage(Data.imageplayer[0])
+            : FileImage(getSongImage(currentSong));
+  }
+
+  bool _darkTheme = false;
+
+  bool get darkTheme => _darkTheme;
+
+  set darkTheme(bool value) {
+    _darkTheme = value;
+  }
+
+  bool darkThemeMode(BuildContext context) {
+    MediaQuery.of(context).platformBrightness == Brightness.dark
+        ? darkTheme = true
+        : darkTheme = false;
+    notifyListeners();
+    return darkTheme;
   }
 
 // ignore: must_call_super

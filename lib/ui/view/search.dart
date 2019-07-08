@@ -3,8 +3,13 @@ import 'package:flutter_musically_app/resources/fontstyle.dart';
 
 class Search extends StatelessWidget {
   const Search({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    Color textColor =
+        MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? Colors.white
+            : Colors.black;
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
@@ -20,7 +25,7 @@ class Search extends StatelessWidget {
         child: Text(
           'Coming soon',
           style: CustomFontStyle.medium_bold_gothic(
-              MediaQuery.of(context).size.width),
+              MediaQuery.of(context).size.width, textColor),
         ),
       ),
     );

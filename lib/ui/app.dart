@@ -33,6 +33,10 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor =
+        MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? Colors.white
+            : Colors.black;
     final width = MediaQuery.of(context).size.width;
     final Size size = MediaQuery.of(context).size;
     return BaseView<MusicModel>(
@@ -53,18 +57,19 @@ class _AppState extends State<App> {
                 Wrap(
                   children: <Widget>[
                     Container(
-                      color: CustomTheme.gray,
+                      color: textColor == Colors.white
+                          ? Colors.black
+                          : CustomTheme.gray,
                       height: size.height / 19,
                       child: Row(
                         children: <Widget>[
                           Container(
-                              width: size.height / 18,
-                              height: size.height / 18,
-                              child: Image.asset(
-                                model.playerImage(),
-                                alignment: Alignment.centerLeft,
-                                fit: BoxFit.cover,
-                              )),
+                            width: size.height / 18,
+                            height: size.height / 18,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: model.getPlayerImage())),
+                          ),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 8.0),
@@ -74,17 +79,25 @@ class _AppState extends State<App> {
                                   Text(
                                     model.currentTitle(),
                                     style: CustomFontStyle.small_bold_gothic(
-                                        size.width),
+                                        size.width * 1.5, textColor),
                                   )
                                 ],
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: size.height / 15,
-                            height: size.height / 18,
-                            child: Text(
-                                '${model.currentPosition.toString()} : ${model.currentDuration.toString()}'),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: SizedBox(
+                              height: size.height / 18,
+                              child: Center(
+                                child: Text(
+                                  '${model.currentPosition.inSeconds.toString()} : ${model.currentDuration.inSeconds.toString()}',
+                                  textAlign: TextAlign.center,
+                                  style: CustomFontStyle.small_bold_gothic(
+                                      size.width * 1.4, textColor),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -117,7 +130,8 @@ class _AppState extends State<App> {
                       }
                     }
                   },
-                  backgroundColor: Colors.transparent,
+                  backgroundColor:
+                      textColor != Colors.white ? Colors.white : Colors.black,
                   selectedItemColor: CustomTheme.red,
                   unselectedItemColor: CustomTheme.gray,
                   items: [

@@ -8,25 +8,31 @@ class Settings extends StatefulWidget {
   _SettingsState createState() => _SettingsState();
 }
 
+Color textColor;
+
 class _SettingsState extends State<Settings> {
   Size size;
 
   @override
   Widget build(BuildContext context) {
+    textColor = MediaQuery.of(context).platformBrightness == Brightness.dark
+        ? Colors.white
+        : Colors.black;
     size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: CustomTheme.gray,
+      backgroundColor:
+          textColor == Colors.black ? CustomTheme.gray : Colors.black,
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
+          color: textColor, //change your color here
         ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
         title: Text(
           'Settings',
-          style: CustomFontStyle.medium_bold_gothic(size.width),
+          style: CustomFontStyle.medium_bold_gothic(size.width, textColor),
         ),
       ),
       body: SingleChildScrollView(
@@ -248,14 +254,14 @@ class _SettingsState extends State<Settings> {
   Widget _textMedium(String text) {
     return Text(
       '$text',
-      style: CustomFontStyle.medium_bold_gothic(size.width),
+      style: CustomFontStyle.medium_bold_gothic(size.width, textColor),
     );
   }
 
   Widget _textSmall(String text) {
     return Text(
       '$text',
-      style: CustomFontStyle.small_bold_gothic(size.width * 1.2),
+      style: CustomFontStyle.small_bold_gothic(size.width * 1.2, textColor),
     );
   }
 }
