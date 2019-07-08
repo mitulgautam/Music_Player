@@ -1,9 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_musically_app/core/viewmodel/music_provider.dart';
+import 'package:flutter_musically_app/core/viewmodel/settings_model.dart';
 import 'package:flutter_musically_app/resources/constant.dart';
 import 'package:flutter_musically_app/resources/fontstyle.dart';
-import 'package:flutter_musically_app/resources/theme.dart';
 import '../../locator.dart';
 import 'base_view.dart';
 
@@ -32,40 +31,45 @@ class _MusicState extends State<Music> {
             ? Colors.white
             : Colors.black;
     size = MediaQuery.of(context).size;
-    return Scaffold(
-        body: BaseView<MusicModel>(
-      builder: (context, model, _) => model.songsList == null
-          ? Center(
-              child: Column(
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    backgroundColor: Colors.white,
+    return BaseView<SettingsModel>(
+      builder: (_, colorModel, __) => Scaffold(
+          backgroundColor: colorModel.secondry,
+          body: BaseView<MusicModel>(
+            builder: (context, model, _) => model.songsList == null
+                ? Center(
+                    child: Column(
+                      children: <Widget>[
+                        CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                        ),
+                        Text('Loading...'),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: model.songsList.length,
+                    itemBuilder: (context, index) {
+                      return _musicCard(
+                          model.getSongImage(index),
+                          model.songsList[index].title,
+                          index,
+                          model.songsList[index].artist,
+                          textColor,
+                          colorModel.primary);
+                    },
                   ),
-                  Text('Loading...'),
-                ],
-              ),
-            )
-          : ListView.builder(
-              itemCount: model.songsList.length,
-              itemBuilder: (context, index) {
-                return _musicCard(
-                    model.getSongImage(index),
-                    model.songsList[index].title,
-                    index,
-                    model.songsList[index].artist,
-                    textColor);
-              },
-            ),
-    ));
+          )),
+    );
   }
 
-  Widget _musicCard(
-      var file, String title, int index, String artist, Color color) {
+  Widget _musicCard(var file, String title, int index, String artist,
+      Color color, Color primary) {
     return InkWell(
       onTap: () {
         modelLocator.tapPlay(index);
       },
       child: Card(
+        color: Colors.white24,
         margin: EdgeInsets.all(4.0),
         elevation: 0.0,
         child: Stack(
@@ -76,7 +80,7 @@ class _MusicState extends State<Music> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: modelLocator.currentSong == index
-                      ? [Colors.amber.shade50, Colors.deepOrange.shade300]
+                      ? [Colors.white54, primary]
                       : [Colors.transparent, Colors.transparent],
                 ),
               ),

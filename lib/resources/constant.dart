@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_musically_app/resources/theme.dart';
+
 class Data {
   static final List<String> bollywood = [
     'Trending - Bollywood Remix',
@@ -31,4 +34,19 @@ class Data {
     'assets/art3.jpg',
     'assets/art4.jpg'
   ];
+  static List<Color> primary = [
+    Colors.purple,
+    Colors.amber,
+    Colors.green,
+    Colors.lightBlue,
+    CustomTheme.red
+  ];
+  static List<Color> secondry = [
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+  ];
+  List<List<Color>> appTheme = [primary, secondry];
 }
