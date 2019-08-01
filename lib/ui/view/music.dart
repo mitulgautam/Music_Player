@@ -26,14 +26,10 @@ class _MusicState extends State<Music> {
 
   @override
   Widget build(BuildContext context) {
-    Color textColor =
-        MediaQuery.of(context).platformBrightness == Brightness.dark
-            ? Colors.white
-            : Colors.black;
     size = MediaQuery.of(context).size;
     return BaseView<SettingsModel>(
       builder: (_, colorModel, __) => Scaffold(
-          backgroundColor: colorModel.secondry,
+          backgroundColor: colorModel.getWidgetColor(),
           body: BaseView<MusicModel>(
             builder: (context, model, _) => model.songsList == null
                 ? Center(
@@ -54,7 +50,7 @@ class _MusicState extends State<Music> {
                           model.songsList[index].title,
                           index,
                           model.songsList[index].artist,
-                          textColor,
+                          colorModel.getTextColor(),
                           colorModel.primary);
                     },
                   ),

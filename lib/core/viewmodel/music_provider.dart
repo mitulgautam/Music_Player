@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'dart:math';
-
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_musically_app/core/enum/play_state.dart';
-import 'package:flutter_musically_app/core/enum/view_state.dart';
 import 'package:flutter_musically_app/resources/constant.dart';
 
 import 'base_model.dart';
