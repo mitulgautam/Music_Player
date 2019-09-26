@@ -1,38 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_musically_app/resources/constant.dart';
-import 'package:flutter_musically_app/resources/fontstyle.dart';
-import 'package:flutter_musically_app/resources/theme.dart';
+import 'package:musically/ui/shared/styles.dart';
+
+import '../../SampleData.dart';
 
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
 }
 
-Color textColor;
-
 class _SettingsState extends State<Settings> {
   Size size;
 
   @override
   Widget build(BuildContext context) {
-    textColor = MediaQuery.of(context).platformBrightness == Brightness.dark
-        ? Colors.white
-        : Colors.black;
     size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor:
-          textColor == Colors.black ? CustomTheme.gray : Colors.black,
+      backgroundColor: Style.gray,
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: textColor, //change your color here
+          color: Colors.black, //change your color here
         ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
         title: Text(
           'Settings',
-          style: CustomFontStyle.medium_bold_gothic(size.width, textColor),
+          style: Style.medium_bold_gothic(size.width),
         ),
       ),
       body: SingleChildScrollView(
@@ -98,10 +92,7 @@ class _SettingsState extends State<Settings> {
                               _textSmall('Streaming Quality'),
                               Text(
                                 'HD',
-                                style: CustomFontStyle
-                                    .very_small_bold_gothic_no_color(
-                                  size.width * 1.2,
-                                ),
+                                style: Style.small_open_sans(size.width),
                               )
                             ],
                           ),
@@ -116,10 +107,7 @@ class _SettingsState extends State<Settings> {
                               _textSmall('Music Language'),
                               Text(
                                 'English,Hindi',
-                                style: CustomFontStyle
-                                    .very_small_bold_gothic_no_color(
-                                  size.width * 1.2,
-                                ),
+                                style: Style.small_open_sans(size.width),
                               )
                             ],
                           ),
@@ -134,7 +122,7 @@ class _SettingsState extends State<Settings> {
                               Switch(
                                 value: false,
                                 onChanged: (value) {},
-                                activeColor: CustomTheme.red,
+                                activeColor: Style.red,
                               )
                             ],
                           ),
@@ -149,7 +137,7 @@ class _SettingsState extends State<Settings> {
                               Switch(
                                 value: true,
                                 onChanged: (value) {},
-                                activeColor: CustomTheme.red,
+                                activeColor: Style.red,
                               )
                             ],
                           ),
@@ -171,11 +159,7 @@ class _SettingsState extends State<Settings> {
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        _boxRadio('assets/light.png'),
-                        _boxRadio('assets/dark.png'),
-                        _boxRadio('assets/auto.png')
-                      ],
+                      children: <Widget>[_boxRadio(), _boxRadio(), _boxRadio()],
                     ),
                   ),
                 ),
@@ -219,7 +203,7 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  Widget _boxRadio(String image) {
+  Widget _boxRadio() {
     return Container(
       child: Column(
         children: <Widget>[
@@ -228,15 +212,9 @@ class _SettingsState extends State<Settings> {
             child: SizedBox(
               width: size.width / 5,
               height: size.width / 5,
-              child: Image.asset(image),
             ),
           ),
-          Radio(
-            value: image == 'assets/light.png' ? 1 : 0,
-            groupValue: 1,
-            onChanged: (value) {},
-            activeColor: CustomTheme.red,
-          )
+          Radio(value: 1, groupValue: null, onChanged: (value) {})
         ],
       ),
     );
@@ -254,14 +232,14 @@ class _SettingsState extends State<Settings> {
   Widget _textMedium(String text) {
     return Text(
       '$text',
-      style: CustomFontStyle.medium_bold_gothic(size.width, textColor),
+      style: Style.medium_bold_gothic(size.width / 1.09),
     );
   }
 
   Widget _textSmall(String text) {
     return Text(
       '$text',
-      style: CustomFontStyle.small_bold_gothic(size.width * 1.2, textColor),
+      style: Style.small_bold_gothic(size.height / 1.3),
     );
   }
 }
